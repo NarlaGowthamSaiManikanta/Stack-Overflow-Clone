@@ -1,0 +1,54 @@
+{% extends 'user/base-no-login.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'user/styles/almost-done-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+    Almost Done Sign up -Stack OverFlow
+{% endblock title %}
+
+{% block content-container %}
+<h5>You’re almost done!</h5>
+<p>You are about to create a new account on Stack Overflow using a login from  Stack Exchange ({{ email }})</p>
+<p>Share a little more about yourself, and we’ll show you more relevant questions.</p>
+<form id="almost-done-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-fields" id="picture-div">
+        <img src="{{picture}}" id="profile-picture">
+        <div>
+            <label>Profile picture</label>
+            <span>Adding a photo can make it easier for others to recognize you.</span>
+            <input type="file" name="{{ form.profile_pic.name }}" id="{{ form.profile_pic.id_for_label }}">
+            <label for="{{form.profile_pic.id_for_label}}" id="image-upload-btn">
+                Pick an image
+            </label>
+        </div>
+    </div>
+    <div class="input-fields" id="name-div">
+        <label for="{{form.name.id_for_label}}">Display name</label>
+        <span>Optional and can be changed later.</span>
+        {{ form.name }}
+    </div>
+    <input id="submit" type="submit" formnovalidate value="Done">
+</form>
+
+<script>
+    const fileInput = document.getElementById('id_profile_pic');
+    const profilePicture = document.getElementById('profile-picture');
+    
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            profilePicture.src = reader.result;
+        }
+    })
+</script>
+
+{% endblock content-container %}

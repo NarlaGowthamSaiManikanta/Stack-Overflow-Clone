@@ -1,0 +1,92 @@
+footer {
+    display: none;
+}
+
+#left-sidebar {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-bottom-right-radius: 0.25rem;
+}
+
+#sidebar-menu {
+    display: block;
+}
+
+#left-sidebar-icon {
+    padding: 0;
+}
+
+.nav-icon-active {
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    #first-path {
+        d: path("M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z") !important;
+    }
+
+    #second-path {
+        d: path("M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z");
+    }
+
+}
+
+header {
+    background-color: white;
+}
+
+body {
+    background-color: #f6f6f6;
+}
+
+.body-container {
+    padding: 0 2rem;
+    border-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 3.25rem);
+}
+
+.content-container {
+    border-style: none;
+    max-width: 40rem;
+    padding: 3rem;
+    background-color: white;
+    font-family: sans-serif;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1rem #666666;
+}
+
+.email-data {
+    display: flex;
+    justify-content: space-between
+}
+
+#sent-icon {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 2rem;
+}
+
+.email-data div {
+    display: flex;
+    flex-direction: column
+}
+
+label {
+    margin: 0.5rem 0;
+}
+
+#email {
+    font-weight: 600;
+}
+
+p {
+    color: #666666;
+    font-size: 0.8rem;
+}

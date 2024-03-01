@@ -1,0 +1,61 @@
+{% extends 'user/base-no-login.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'user/styles/login-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+    Log in - Stack Overflow
+{% endblock title %}
+
+{% block content-container %}
+<a class = "logo" id="content-logo"></a>
+<form id="login-form" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="input-fields">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+            {% if field.id_for_label == 'id_password' %}
+                <a id='forgot-password'>Forgot password?</a>
+                <svg width="16" height="16" fill="currentColor" class="nav-icon" viewBox="0 0 16 16" id="password-eye">
+                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/> 
+                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                    <path id="slash" d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 
+                        0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                </svg>
+                {{ form.non_field_errors }}
+            {% endif %}
+        </div>
+    {% endfor %} 
+    <input id="submit" type="submit" formnovalidate value="Log In">
+</form>
+
+<div id="signup-container">
+    <span>
+        Don't have an account?
+        <a id="signup-redirect" href= "{% url 'user:signup' %}">Sign up</a>
+    </span>
+</div>
+
+<script>
+    let passwordEye = document.getElementById('password-eye');
+    let slash = document.getElementById('slash');
+    let passwordField = document.getElementById('id_password');
+
+    passwordEye.addEventListener("click", () => {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            slash.style.display = 'none';
+        } else {
+            passwordField.type = 'password';
+            slash.style.display = 'block';
+        }
+    });
+
+</script>
+
+{% endblock content-container %}

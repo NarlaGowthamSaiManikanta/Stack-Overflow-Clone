@@ -1,0 +1,99 @@
+{% extends 'user/base-no-login.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'user/styles/signup-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+    Sign Up - Stack Overflow
+{% endblock title %}
+
+{% block content-container %}
+<div class="sof-about-container">
+    <a class = "logo" id="content-logo"></a>
+    <span class = "sof-details">
+        <svg width="16" height="16" aria-hidden="true" viewBox="0 0 18 18" class="details-icon" id="questions-icon">
+            <path  d="m4 15-3 3V4c0-1.1.9-2 2-2h12c1.09 0 2 .91 2 2v9c0 1.09-.91 2-2 2H4Zm7.75-3.97c.72-.83.98-1.86.98-2.94 0-1.65-.7-3.22-2.3-3.83a4.41 
+                4.41 0 0 0-3.02 0 3.8 3.8 0 0 0-2.32 3.83c0 1.29.35 2.29 1.03 3a3.8 3.8 0 0 0 2.85 1.07c.62 0 1.2-.11 1.71-.34.65.44 
+                1 .68 1.06.7.23.13.46.23.7.3l.59-1.13a5.2 5.2 0 0 1-1.28-.66Zm-1.27-.9a5.4 5.4 0 0 0-1.5-.8l-.45.9c.33.12.66.29.98.5-.2.07-.42.11-.65.11-.61 
+                0-1.12-.23-1.52-.68-.86-1-.86-3.12 0-4.11.8-.9 2.35-.9 3.15 0 .9 1.01.86 3.03-.01 4.08Z"/>
+        </svg>
+        Get unstuck - ask a question!
+    </span>
+    <span class="sof-details">
+        <svg width="16" height="16" aria-hidden="true" viewBox="0 0 18 18" class="details-icon" id="tags-icon">
+            <path  d="M9.24 1a3 3 0 0 0-2.12.88l-5.7 5.7a2 2 0 0 0-.38 2.31 3 3 0 0 1 .67-1.01l6-6A3 3 0 0 1 9.83 2H14a3 3 0 0 1 .79.1A2 2 0 0 0 13 1H9.24Z" opacity=".4"/>
+            <path  d="M9.83 3a2 2 0 0 0-1.42.59l-6 6a2 2 0 0 0 0 2.82L6.6 16.6a2 2 0 0 0 2.82 0l6-6A2 2 0 0 0 16 9.17V5a2 2 0 0 0-2-2H9.83ZM12 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
+        </svg>
+        Save your favorite posts, tags and filters
+    </span>
+    <span class="sof-details">
+        <svg width="16" height="16" fill="currentColor" class="details-icon" 
+            id="rewards-icon" viewBox="0 0 16 16">
+            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 
+                2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 
+                1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 
+                1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 
+                3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z" />
+        </svg>
+        Answer questions and earn reputation
+    </span>
+</div>
+
+<div class = "right-container">
+    <div class="form-container">
+        <h2>Create your account</h2>
+        <p>
+            By clicking "Sign up", you agree to our terms of Service <br>
+            and acknowledge you have read our privacy policy.
+        </p>
+        <form id="signup-form" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="input-fields">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                    {% if field.id_for_label == 'id_password' %}
+                        <svg width="16" height="16" fill="currentColor" class="nav-icon" viewBox="0 0 16 16" id="password-eye">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/> 
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            <path id="slash" d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 
+                                0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                        </svg>
+                    {% endif %}
+                    <span class="help-text">{{ field.help_text }}</span>
+                </div>
+            {% endfor %}   
+            <input id="submit" type="submit" formnovalidate value="Sign Up">
+        </form>
+    </div>
+    
+    <div id="login-container">
+        <span>
+            Already have an account?
+            <a id="login-redirect" href= "{% url 'user:login' %}">Log in</a>
+        </span>
+    </div>
+</div>
+
+<script>
+    let passwordEye = document.getElementById('password-eye');
+    let slash = document.getElementById('slash');
+    let passwordField = document.getElementById('id_password');
+
+    passwordEye.addEventListener("click", () => {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            slash.style.display = 'none';
+        } else {
+            passwordField.type = 'password';
+            slash.style.display = 'block';
+        }
+    });
+
+</script>
+
+{% endblock content-container %}

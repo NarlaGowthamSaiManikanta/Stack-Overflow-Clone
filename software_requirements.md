@@ -50,6 +50,7 @@ As a Higher Reputation Users, ISBAT to protect the question.<br>
 - **User**
 	- Id
 	- Name
+	- Email
 	- Joined date
 	- Profile Picture
 	- Reputation
