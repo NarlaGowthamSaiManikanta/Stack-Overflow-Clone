@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model, login, logout
 from django.http import HttpResponse
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.shortcuts import render, redirect
 from .models import User
 from .forms import UserCreationForm, AlmostDoneForm
@@ -11,6 +11,8 @@ from django.utils.encoding import force_bytes, force_str
 from .token import generate_token
 from django.core.mail import send_mail
 from StackOverFlowClone.settings import EMAIL_HOST_USER
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -94,6 +96,7 @@ def signup(request):
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': generate_token.make_token(user),
+                'url_name': 'user:activate'
             })
             to_email = form.cleaned_data.get('email')
             send_mail(subject=mail_subject, message="", from_email=EMAIL_HOST_USER , recipient_list=[to_email],
@@ -116,5 +119,67 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         return redirect('user:signup')
+    else:
+        return HttpResponse('Invalid')
+
+
+def account_recovery(request):
+    if request.user.is_authenticated:
+        redirect('user:index')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            validate_email(email)
+        except ValidationError:
+            return render(request, 'user/account-recovery.html', {
+                'error': 'Please provide a valid email'
+            })
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return render(request, 'user/account-recovery.html', {
+                'email': email,
+                'div': 2
+            })
+
+        current_site = get_current_site(request)
+        mail_subject = 'Account Recovery link has been sent to your email id'
+        message = render_to_string('user/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': generate_token.make_token(user),
+            'url_name': 'user:recovery'
+        })
+        send_mail(subject=mail_subject, message="", from_email=EMAIL_HOST_USER, recipient_list=[email],
+                  html_message=message)
+
+        return render(request, 'user/account-recovery.html', {
+            'email': email,
+            'div': 1
+        })
+    else:
+        return render(request, 'user/account-recovery.html', {})
+
+
+def recovery(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and generate_token.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(data=request.POST, user=user)
+            if form.is_valid():
+                form.save()
+                return redirect('user:index')
+            else:
+                return render(request, 'user/password-change.html', {'form': form, 'user': user})
+        else:
+            form = SetPasswordForm(user)
+            return render(request, 'user/password-change.html', {'form': form, 'user': user})
     else:
         return HttpResponse('Invalid')

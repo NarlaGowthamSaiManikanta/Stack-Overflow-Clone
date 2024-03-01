@@ -1,0 +1,42 @@
+{% extends 'user/base-no-login.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'user/styles/account-recovery-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+    Account Recovery - Stack Overflow
+{% endblock title %}
+
+{% block content-container %}
+{% if div == 1 %}
+<div id="sent-mail">
+    <h3>Account recovery email sent to<br>{{email}}</h3>
+    <p>
+        If you don’t see this email in your inbox within 15 minutes, look for it in your junk mail folder. If you find it there, please mark it as “Not Junk”.
+    </p>
+</div>
+{% elif div == 2 %}
+<div id="invalid-mail">
+    <h3>Account with {{email}} does not exist</h3>
+    <p>
+        you have to create an account as there is no account associated with this email.
+    </p>
+</div>
+
+{% else %}
+<form id="account-form" method="post">
+    {% csrf_token %}
+    <p>
+        Forgot your account’s password? Enter your email address and we’ll send you a recovery link.
+    </p>
+    <label for="id_email">Email</label>
+    <input id="id_email" name="email" type="email">
+    <span id="error">{{ error }}</span>
+    <input id="submit" type="submit" formnovalidate value="Send recovery email">
+</form>
+{% endif %}
+
+{% endblock content-container %}

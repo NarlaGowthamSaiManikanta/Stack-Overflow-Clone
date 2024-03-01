@@ -25,7 +25,7 @@
     <h1>Verify your Email</h1>
     <h4>Hi {{ user.email }},</h4>
     To complete your Stack Overflow registration, please select the button below.<br>
-    <a href="http://{{ domain }}{% url 'user:activate' uidb64=uid token=token %}">
+    <a href="http://{{ domain }}{% url url_name uidb64=uid token=token %}">
         <button>
             Verify email address
         </button>
