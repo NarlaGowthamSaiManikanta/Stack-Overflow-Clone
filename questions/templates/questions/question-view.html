@@ -60,7 +60,7 @@
             {{ question.content|convert_markdown|safe }}
             <div class="tags-container">
             {% for tag in question.tags.all %}
-            <a class="tags">{{tag.name}}</a>
+            <a href="{% url 'questions:tagged_questions' tag.name %}" class="tags">{{tag.name}}</a>
             {% endfor %}
             </div>
             <div class="question-author-data">

@@ -6,6 +6,7 @@ app_name = 'questions'
 urlpatterns = [
     path('ask/', views.ask, name='ask'),
     path('tag/', views.tag_upload, name='tag'),
+    path('tagged/<str:tag>/', views.tagged_questions, name='tagged_questions'),
     path('<int:question_id>/', views.question_view, name='question_view'),
     path('comment/question/<int:question_id>/', views.comment_question, name='comment_question'),
     path('comment/answer/<int:answer_id>/', views.comment_answer, name='comment_answer'),

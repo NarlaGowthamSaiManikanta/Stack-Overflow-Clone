@@ -1,0 +1,22 @@
+{% extends base_html %}
+
+{% load static %}
+{% load humanize %}
+
+{% load content_markdown %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'questions/styles/tagged-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+{{tag}} tag - Stackoverflow
+{% endblock title %}
+
+{% block content-container %}
+<div class="title-container">
+    <h1>Questions tagged [{{ tag }}]</h1>
+    <a href="{% url 'questions:ask' %}" class="ask-btn">Ask a question</a>
+    <p>{{tag.description}}</p>
+</div>
+{% endblock content-container %}

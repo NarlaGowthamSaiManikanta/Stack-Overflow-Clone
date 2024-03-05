@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AskForm, ReviewForm, TagForm, AnswerUploadForm
-from .models import Question, Answer, Visit
+from .models import Question, Answer, Visit, Tag
 
 
 # Create your views here.
@@ -185,6 +185,18 @@ def vote_answer(request, answer_id, option):
         answer.down_votes.add(request.user)
 
     return redirect('questions:question_view', question_id=answer.question.id)
+
+
+def tagged_questions(request, tag):
+    if request.user.is_authenticated:
+        base_html = 'questions/tagged.html'
+    questions = Question.objects.filter(tags__name=tag)
+    get_object_or_404(questions)
+    return render(request, 'questions/tagged.html', {
+        'base_html': 'user/base.html',
+        'questions': questions,
+        'tag': Tag.objects.get(name=tag),
+    })
 
 
 def tag_upload(request):
