@@ -1,0 +1,78 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'questions/styles/ask-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+Ask a public question - Stack Overflow
+{% endblock title %}
+
+{% block content-container %}
+{% if ask_form %}
+    <div id="ask-question-container">
+        <h2>Ask a public question</h2>
+        <div class="question-guide">
+            <h3>Writing a good question</h3>
+            <p>
+                You’re ready to ask a programming-related question and this form will help guide you through the process.
+                Looking to ask a non-programming question? See the topics here to find a relevant site.
+            </p>
+            <ul>
+                Steps
+                <li>Summarize your problem in a one-line title.</li>
+                <li>Describe your problem in more detail.</li>
+                <li>Describe what you tried and what you expected to happen.</li>
+                <li>Add “tags” which help surface your question to members of the community.</li>
+                <li>Review your question and post it to the site.</li>
+            </ul>
+        </div>
+        <form id='ask-form' method="post">
+            {% csrf_token %}
+            {{ask_form.media}}
+            {% for field in ask_form %}
+            <div class="input-fields">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <p class="field-help-text">{{ field.help_text }}</p>
+                {{ field }}
+                {{field.errors}}
+            </div>
+            {% endfor %}
+            <input type="submit" class="next-btn" formnovalidate value="Review your question">
+        </form>
+
+    </div>
+{% endif %}
+{% if review_form %}
+    <div id="review-question-container">
+        <h2>Review your question</h2>
+        <p class="question-guide">
+            Please do a final review of your question and then post.
+        </p>
+        <form id='review-form' method="post">
+            {% csrf_token %}
+            {{review_form.media}}
+            {% for field in review_form %}
+            {% if field.id_for_label == 'id_bounty_amount' and user.reputation < 50 %}
+            {% else %}
+            <div class="input-fields">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <p class="field-help-text">{{ field.help_text }}</p>
+                {{ field }}
+                {{field.errors}}
+            </div>
+            {% endif %}
+            {% endfor %}
+            <input type="submit" class="next-btn" formnovalidate value="Post your question">
+        </form>
+    </div>
+{% endif %}
+<script>
+    let tagsInput = document.getElementById('tags');
+    tagsInput.addEventListener('input', (event) => {
+        let input = event.target.value;
+    })
+</script>
+{% endblock content-container %}

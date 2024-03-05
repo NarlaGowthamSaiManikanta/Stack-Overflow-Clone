@@ -71,10 +71,18 @@
             <div id="header-navigation-bar">
                 <a id="header-user-profile-container">
                     <img id="header-user-profile-picture" class="profile-picture"
-                        src="https://www.gravatar.com/avatar/bd4ad8003348d24623d748be5bc12daf?s=256&d=identicon&r=PG&f=y&so-version=2">
+                        src="{{ user.profile_pic.url }}">
                     <ul id="header-user-rewards">
-                        <li id="header-user-profile-reputation" class="header-user-rewards-values">1</li>
-                        <li id="header-user-profile-bronze-badges" class="header-user-rewards-values">● 1</li>
+                        <li id="header-user-profile-reputation" class="header-user-rewards-values">{{ user.reputation }}</li>
+                        {% if user.gold_badges %}
+                            <li id="header-user-profile-gold-badges" class="header-user-rewards-values">● {{ user.gold_badges }}</li>
+                        {% endif %}
+                        {% if user.silver_badges %}
+                            <li id="header-user-profile-silver-badges" class="header-user-rewards-values">● {{ user.silver_badges }}</li>
+                        {% endif %}  
+                        {% if user.bronze_badges %}
+                            <li id="header-user-profile-bronze-badges" class="header-user-rewards-values">● {{ user.bronze_badges }}</li>
+                        {% endif %}  
                     </ul>
                 </a>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="nav-icon"
@@ -104,6 +112,11 @@
                 <svg aria-hidden="true" class="nav-icon" id="stack-exchange-icon" width="18" height="18"  viewBox="0 0 18 18">
                     <path  d="M15 1H3a2 2 0 0 0-2 2v2h16V3a2 2 0 0 0-2-2ZM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 0 0 2-2v-2H1v2Zm16-7H1v4h16V6Z"/>
                 </svg>
+                <div id="logout-container" class="dropdown">
+                    <a href="{% url 'user:logout' %}">
+                        <button>Logout</button>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -273,6 +286,7 @@
         let dropdowns =document.querySelectorAll('.dropdown');
         let mobileDropdowns =document.querySelectorAll('.dropdown-mobile');
         let dropdownBtns = document.querySelectorAll('.dropdown-btn');
+        let logoutBtn = document.getElementById('stack-exchange-icon');
 
         productsBtn.addEventListener('click', () => {
             let productsDropDown = document.getElementById('products-ul');
@@ -349,6 +363,29 @@
                 }
             });
         }
+
+        logoutBtn.addEventListener('click', () => {
+            let logoutContainer = document.getElementById('logout-container');
+        
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+
+            if (window.innerWidth < 768) {
+                mobileDropdowns.forEach(dropdown => dropdown.style.display = 'none');
+            }
+
+            let logoutBtnClassName = logoutBtn.getAttribute('class');
+            if (logoutBtnClassName.endsWith(' active')) {
+                logoutBtnClassName = logoutBtnClassName.replace(' active', '');
+                logoutBtn.setAttribute('class', logoutBtnClassName);
+                logoutContainer.style.display = 'none';
+            } else {
+                logoutBtnClassName += ' active';
+                logoutBtn.setAttribute('class', logoutBtnClassName);
+                logoutContainer.style.display = 'block';
+            }
+        })
         
     </script>
 </body>

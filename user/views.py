@@ -17,8 +17,12 @@ from django.core.exceptions import ValidationError
 
 # Create your views here.
 def index(request):
-    logout(request)
     return HttpResponse('Home Page')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('user:login')
 
 
 def profile(request, user_id):
@@ -34,6 +38,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            if request.GET.get('next') is not None:
+                return redirect(request.GET.get('next'))
             return redirect('user:index')
         else:
             try:

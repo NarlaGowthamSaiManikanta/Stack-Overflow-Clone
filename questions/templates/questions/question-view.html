@@ -1,0 +1,197 @@
+{% extends base_html %}
+
+{% load static %}
+{% load humanize %}
+
+{% load content_markdown %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'questions/styles/question-view-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+ {{question.title}} - Stackoverflow
+{% endblock title %}
+
+{% block content-container %}
+    <div class="title-container">
+        <h1>{{ question.title }}</h1>
+        <a href="{% url 'questions:ask' %}" class="ask-btn">Ask a question</a>
+    </div>
+    <div class="question-details-container">
+        <div class="question-detail">
+            <p class="attribute">Asked</p>
+            <p class="value">{{ question.posted_date|naturaltime }}</p>
+        </div>
+        <div class="question-detail">
+            <p class="attribute">Modified</p>
+            <p class="value">{{ question.modified_date|naturaltime }}</p>
+        </div>
+        <div class="question-detail">
+            <p class="attribute">Viewed</p>
+            <p class="value">{{ question.visit_set.count }} times</p>
+        </div>
+    </div>
+    <div class="question-content-container">
+        <div class="tools-container">
+            {% if user in question.up_votes.all %}
+            <a href="{% url 'questions:vote_question' question.id 'remove' %}" id="upvote-selected" class="tools"></a>
+            {% else %}
+            <a href="{% url 'questions:vote_question' question.id 'upvote' %}" id="upvote" class="tools"></a>
+            {% endif %}
+            <p class="question-votes">{{ question.get_votes }}</p>
+            {% if user in question.down_votes.all %}
+            <a href="{% url 'questions:vote_question' question.id 'remove' %}" id="downvote-selected" class="tools"></a>
+            {% else %}
+            <a href="{% url 'questions:vote_question' question.id 'downvote' %}" id="downvote" class="tools"></a>
+            {% endif %}
+            {% if user in question.saved_by.all %}
+            <a href="{% url 'questions:question_save' question.id %}" id="save-selected" class="tools"></a>
+            {% else %}
+            <a href="{% url 'questions:question_save' question.id %}" id="save" class="tools"></a>
+            {% endif %}
+        </div>
+        <div>
+            {% if question.bounty_amount > 0 %}
+            <div class="bounty-info-container">
+                Answers to this question are eligible for a <span>+{{question.bounty_amount}}</span> reputation bounty. {{question.user.name}} is looking for an answer from a reputable source
+            </div>
+            {% endif %}
+            {{ question.content|convert_markdown|safe }}
+            <div class="tags-container">
+            {% for tag in question.tags.all %}
+            <a class="tags">{{tag.name}}</a>
+            {% endfor %}
+            </div>
+            <div class="question-author-data">
+                <p>Asked {{ question.posted_date|naturaltime }}</p>
+                <div class="author-profile">
+                    <img src="{{question.user.profile_pic.url}}" height="32" width="32">
+                    <div>
+                        {{ question.user.name }}
+                        <ul id="header-user-rewards">
+                            <li id="header-user-profile-reputation" class="header-user-rewards-values">{{ question.user.reputation }}</li>
+                            {% if question.user.gold_badges %}
+                                <li id="header-user-profile-gold-badges" class="header-user-rewards-values">● {{ question.user.gold_badges }}</li>
+                            {% endif %}
+                            {% if question.user.silver_badges %}
+                                <li id="header-user-profile-silver-badges" class="header-user-rewards-values">● {{ question.user.silver_badges }}</li>
+                            {% endif %}  
+                            {% if question.user.bronze_badges %}
+                                <li id="header-user-profile-bronze-badges" class="header-user-rewards-values">● {{ question.user.bronze_badges }}</li>
+                            {% endif %}  
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% for comment in question.questioncomments_set.all %}
+            <div class="comments">
+                {{comment.comment}}
+                - <a>{{comment.user.name}}</a>
+            </div>
+            {% endfor %}
+            {% if user.reputation > 15 %}
+            <a>Add Comment</a>
+            <form method="post" action="{% url 'questions:comment_question' question.id %}">
+                {% csrf_token %}
+                <input type="text" name="comment">
+                <input type="submit" value="Comment">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    <div class="answers-container">
+        {% if question.answer_set.count > 1 %}
+            <h3>{{ question.answer_set.count }} Answers</h3>
+        {% elif question.answer_set.count == 1 %}
+            <h3>1 Answer</h3>
+        {% else %}
+            <h3>No answers yet</h3>
+        {% endif %}
+
+        {% for answer in question.answer_set.all %}
+            <div class="answers">
+                <div class="tools-container">
+                    {% if user in answer.up_votes.all %}
+                    <a href="{% url 'questions:vote_answer' answer.id 'remove' %}" id="upvote-selected" class="tools"></a>
+                    {% else %}
+                    <a href="{% url 'questions:vote_answer' answer.id 'upvote' %}" id="upvote" class="tools"></a>
+                    {% endif %}
+                    <p class="answer-votes">{{ answer.get_votes }}</p>
+                    {% if user in answer.down_votes.all %}
+                    <a href="{% url 'questions:vote_answer' answer.id 'remove' %}" id="downvote-selected" class="tools"></a>
+                    {% else %}
+                    <a href="{% url 'questions:vote_answer' answer.id 'downvote' %}" id="downvote" class="tools"></a>
+                    {% endif %}
+                    {% if answer.question.accepted_answer == answer and answer.question.user == user %}
+                        <a href="{% url 'questions:accept_answer' answer.id %}" id="accept-selected" class="tools"></a>
+                    {% elif answer.question.user == user %}
+                        <a href="{% url 'questions:accept_answer' answer.id %}" id="accept" class="tools"></a>
+                    {% elif answer.question.accepted_answer == answer %}
+                    <a id="accept-selected" class="tools"></a>
+                    {% endif %}
+                    {% if user in answer.saved_by.all %}
+                    <a href="{% url 'questions:answer_save' answer.id %}" id="save-selected" class="tools"></a>
+                    {% else %}
+                    <a href="{% url 'questions:answer_save' answer.id %}" id="save" class="tools"></a>
+                    {% endif %}
+                </div>
+                <div class="answer-content-container">
+                {{ answer.content|convert_markdown|safe }}
+                <div class="answer-author-data">
+                    <p>Answered {{ answer.posted_date|naturaltime }}</p>
+                    <div class="author-profile">
+                        <img src="{{answer.user.profile_pic.url}}" height="32" width="32">
+                        <div>
+                            {{ answer.user.name }}
+                            <ul id="header-user-rewards">
+                                <li id="header-user-profile-reputation" class="header-user-rewards-values">{{ answer.user.reputation }}</li>
+                                {% if answer.user.gold_badges %}
+                                    <li id="header-user-profile-gold-badges" class="header-user-rewards-values">● {{ answer.user.gold_badges }}</li>
+                                {% endif %}
+                                {% if answer.user.silver_badges %}
+                                    <li id="header-user-profile-silver-badges" class="header-user-rewards-values">● {{ answer.user.silver_badges }}</li>
+                                {% endif %}  
+                                {% if answer.user.bronze_badges %}
+                                    <li id="header-user-profile-bronze-badges" class="header-user-rewards-values">● {{ answer.user.bronze_badges }}</li>
+                                {% endif %}  
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% for comment in answer.answercomments_set.all %}
+                    <div class="comments">
+                        {{comment.comment}}
+                        - <a>{{comment.user.name}}</a>
+                    </div>
+                {% endfor %}
+                {% if user.reputation > 15 %}
+                    <a>Add Comment</a>
+                    <form method="post" action="{% url 'questions:comment_answer' answer.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="comment">
+                        <input type="submit" value="Comment">
+                    </form>
+                {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="answer-upload-container">
+        {% if user.is_authenticated %}
+            <form id="answer-form" method="post">
+                {% csrf_token %}
+                {% if already_answered %}
+                    <h3>Edit your answer</h3>
+                {% else %}
+                    <h3>Your Answer</h3>
+                {% endif %}
+                {{form.media}}
+                {{form.content}}
+                {{form.content.errors}}
+            <input class="submit-btn" type="submit" formnovalidate value="Post Your Answer">
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock content-container %}
