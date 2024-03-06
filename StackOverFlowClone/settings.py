@@ -85,6 +85,7 @@ DATABASES = {
     #     'USER': 'sofc_user',
     #     'PASSWORD': 'password@123',
     #     'HOST': 'localhost',
+    #     'PORT': '5432'
     # }
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 
@@ -179,5 +180,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sofc.user@gmail.com'
-EMAIL_HOST_PASSWORD = 'yytn zndg fjwj nusr'
+EMAIL_HOST_PASSWORD = 'ubud qoyu wmre qlok'
 EMAIL_PORT = 25
