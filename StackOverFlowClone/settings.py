@@ -79,15 +79,16 @@ WSGI_APPLICATION = 'StackOverFlowClone.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'sofc_db',
-    #     'USER': 'sofc_user',
-    #     'PASSWORD': 'password@123',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432'
-    # }
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sofc_db',
+        'USER': 'sofc_user',
+        'PASSWORD': 'password#123',
+        # 'HOST': 'localhost'
+        'HOST': 'sofc-db.cjwoeowyku4h.eu-north-1.rds.amazonaws.com',
+        'PORT': '5432'
+    }
+    # 'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 
 }
 
