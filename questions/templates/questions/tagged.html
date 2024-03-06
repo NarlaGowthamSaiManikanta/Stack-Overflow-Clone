@@ -19,4 +19,36 @@
     <a href="{% url 'questions:ask' %}" class="ask-btn">Ask a question</a>
     <p>{{tag.description}}</p>
 </div>
+<div class="questions-container">
+    <div class="questions-container-header">
+        <h3>{{questions.count}} questions</h3>
+    </div>
+    {% for question in questions %}
+    <div class="question-info">
+        <div class="question-details">
+            <p class="question-votes">{{question.get_votes}} votes</p>
+            <p class="question-answers-count">{{question.answer_set.count}} answers</p>
+            <p class="question-views">{{ question.visit_set.count }} views</p>
+            {% if question.bounty_amount > 0 %}
+            <p class = "question-bounty">+{{question.bounty_amount}}</p>
+            {% endif %}
+        </div>
+        <div class="question">
+            <a href="{% url 'questions:question_view' question.id %}" class="question-title">{{ question.title }}</a>
+            <p>{{ question.content }}</p>
+            <div class="question-tags">
+                {% for tag in question.tags.all %}
+                <a href="{% url 'questions:tagged_questions' tag.name %}" class="tags">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+            <div class="question-author-details">
+                <img src="{{question.user.profile_pic.url}}" class="author-profile-pic" height="16" width="16">
+                <a href="{% url 'user:profile' question.user.id %}" class="question-author">{{question.user.name}}</a>
+                <label class="author-reputation">{{ question.user.reputation }}</label>
+                <p class="asked-time">asked {{ question.posted_date|naturaltime }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content-container %}

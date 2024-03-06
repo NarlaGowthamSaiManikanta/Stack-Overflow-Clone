@@ -19,7 +19,7 @@ class Question(models.Model):
                                                               'Body requires minimum 220 characters.')])
     posted_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now_add=True)
-    bounty_amount = models.IntegerField(default=0)
+    bounty_amount = models.IntegerField(default=0, blank=True)
     saved_by = models.ManyToManyField(User, related_name='question_save', blank=True)
     up_votes = models.ManyToManyField(User, related_name='up_votes', blank=True)
     down_votes = models.ManyToManyField(User, related_name='down_votes', blank=True)

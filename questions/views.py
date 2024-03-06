@@ -96,7 +96,7 @@ def ask(request):
             question.save()
             review_form.save_m2m()
 
-            return HttpResponse('Question Asked')
+            return redirect('questions:question_view', question.id)
         else:
             if request.POST.get('content') is not None:
                 review_form = ReviewForm(request.POST)
@@ -188,12 +188,19 @@ def vote_answer(request, answer_id, option):
 
 
 def tagged_questions(request, tag):
+    base_html = 'user/base-no-login.html'
     if request.user.is_authenticated:
-        base_html = 'questions/tagged.html'
+        base_html = 'user/base.html'
+
+    try:
+        Tag.objects.get(name=tag)
+    except Tag.DoesNotExist:
+        return HttpResponse(status=404)
+
     questions = Question.objects.filter(tags__name=tag)
-    get_object_or_404(questions)
+
     return render(request, 'questions/tagged.html', {
-        'base_html': 'user/base.html',
+        'base_html': base_html,
         'questions': questions,
         'tag': Tag.objects.get(name=tag),
     })

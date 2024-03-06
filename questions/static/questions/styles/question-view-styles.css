@@ -271,6 +271,14 @@
     border-radius: 0.25rem;
 }
 
+.question-content-container > div{
+    width: 100%;
+}
+
+.question-content-container .tools-container {
+    width: fit-content;
+}
+
 @media (max-width:767px) {
     .content-container{
         width: calc(100% - 2rem);
@@ -278,13 +286,5 @@
 
     .question-detail {
         flex-direction: column;
-    }
-
-    .question-content-container div{
-        width: calc(100% - 2.5rem);
-    }
-
-    .question-content-container .tools-container {
-        width: fit-content;
     }
 }
