@@ -182,4 +182,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sofc.user@gmail.com'
 EMAIL_HOST_PASSWORD = 'ubud qoyu wmre qlok'
-EMAIL_PORT = 25
+EMAIL_PORT = 587
