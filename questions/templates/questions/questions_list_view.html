@@ -10,18 +10,19 @@
 {% endblock stylesheet %}
 
 {% block title %}
-{{tag}} tag - Stackoverflow
+{{title}} - Stack Overflow
 {% endblock title %}
 
 {% block content-container %}
 <div class="title-container">
-    <h1>Questions tagged [{{ tag }}]</h1>
+    <h1>{{ page_title }}</h1>
     <a href="{% url 'questions:ask' %}" class="ask-btn">Ask a question</a>
-    <p>{{tag.description}}</p>
 </div>
 <div class="questions-container">
     <div class="questions-container-header">
+        {% if page_title == 'All Questions' %}
         <h3>{{questions.count}} questions</h3>
+        {% endif %}
     </div>
     {% for question in questions %}
     <div class="question-info">
@@ -35,7 +36,9 @@
         </div>
         <div class="question">
             <a href="{% url 'questions:question_view' question.id %}" class="question-title">{{ question.title }}</a>
+            {% if page_title == 'All Questions' %}
             <p>{{ question.content|convert_markdown|striptags }}</p>
+            {% endif %}
             <div>
                 <div class="question-tags">
                     {% for tag in question.tags.all %}
@@ -44,7 +47,7 @@
                 </div>
                 <div class="question-author-details">
                     <img src="{{question.user.profile_pic.url}}" class="author-profile-pic" height="16" width="16">
-                    <a href="{% url 'user:profile' question.user.id %}" class="question-author">{{question.user.name}}</a>
+                    <a href="{% url 'user:profile' question.user_id %}" class="question-author">{{question.user.name}}</a>
                     <label class="author-reputation">{{ question.user.reputation }}</label>
                     <p class="asked-time">asked {{ question.posted_date|naturaltime }}</p>
                 </div>
@@ -52,5 +55,8 @@
         </div>
     </div>
     {% endfor %}
+    {% if page_title == 'Top Questions' %}
+    <h4>Looking for more? Browse the <a>complete list of questions</a>, or <a>popular tags</a>. Help us answer unanswered questions.</h4>
+    {% endif %}
 </div>
 {% endblock content-container %}

@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.shortcuts import render, redirect
+
+from questions.models import Question
 from .models import User
 from .forms import UserCreationForm, AlmostDoneForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,8 +18,29 @@ from django.core.exceptions import ValidationError
 
 
 # Create your views here.
+def home(request):
+    if request.user.is_authenticated:
+        questions = Question.objects.all().order_by('visit', '-posted_date')
+        return render(request, 'questions/questions_list_view.html', {
+            'base_html': 'user/base.html',
+            'questions': questions,
+            'page_title': 'Top Questions',
+        })
+
+
 def index(request):
-    return HttpResponse('Home Page')
+    users = User.objects.all()
+
+    if request.user.is_authenticated:
+        base_html = 'user/base.html'
+    else:
+        base_html = 'user/base-no-login.html'
+
+    return render(request, 'user/users-list-view.html', {
+        'base_html': base_html,
+        'users': users,
+        'title': 'Users'
+    })
 
 
 def logout_view(request):
@@ -27,7 +50,7 @@ def logout_view(request):
 
 def profile(request, user_id):
     user_data = User.objects.get(pk=user_id)
-    return HttpResponse(user_data.profile_picture)
+    return HttpResponse(user_data.profile_pic)
 
 
 def login_view(request):

@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from user.views import home
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
+    path('', home, name='index'),
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('questions/', include('questions.urls')),

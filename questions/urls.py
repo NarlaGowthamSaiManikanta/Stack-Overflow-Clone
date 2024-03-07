@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'questions'
 urlpatterns = [
+    path('', views.index, name='index'),
     path('ask/', views.ask, name='ask'),
     path('tag/', views.tag_upload, name='tag'),
     path('tagged/<str:tag>/', views.tagged_questions, name='tagged_questions'),

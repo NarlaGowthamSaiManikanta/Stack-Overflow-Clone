@@ -8,6 +8,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+
+    h1 {
+        font-weight: 400;
+        margin: 0.5rem 0;
+    }
+
+    p{
+        font-size: 0.85rem;
+        text-align: justify;
+    }
 }
 
 .ask-btn {
@@ -24,6 +34,10 @@
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: #cccccc;
+    
+    h3 {
+        font-weight: 450;
+    }
 }
 
 .question-info {
@@ -31,15 +45,90 @@
 }
 
 .question-details {
-    width: 10rem;
-    margin-right: 1rem;
+    padding: 0rem 1rem;
+    width: 20%;
+    text-align: right;
+}
+
+.question-info {
+    padding: 1rem 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #cccccc;
+
+    p {
+        margin: 0.5rem 0;
+        font-size: 0.8rem;
+        color: #333333;
+    }
+}
+
+.question > p {
+    text-align: justify;
+    height: 2rem;
+    overflow-y: clip;
 }
 
 .question-title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    color: rgb(55, 117, 217);
+    text-decoration: none;
 }
 
 .question-author-details {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    font-size: 0.75rem;
+    margin: 0.5rem 0;
+    margin-left: auto;
+    
+    *, p {
+        margin: 0;
+        padding-right: 0.25rem;
+    }
+
+    .author-reputation {
+        font-weight: 600;
+    }
+
+    .question-author {
+        color: rgb(55, 117, 217);
+        text-decoration: none;
+    }
+}
+
+.question > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center
+    
+}
+
+.question-tags {
+    width: fit-content;
+}
+
+.tags {
+    text-decoration: none;
+    font-size: 0.75rem;
+    color: rgb(55, 117, 217);
+    padding: 0.25rem;
+    background-color: rgb(112 162 189 / 39%);
+    border-radius: 0.25rem;
+}
+
+.question-details .question-bounty {
+    padding: 0.3rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(55, 117, 217);
+    margin-left: auto;
+    width:fit-content;
+}
+
+.question {
+    width:-webkit-fill-available
 }

@@ -6,6 +6,16 @@ from .models import Question, Answer, Visit, Tag
 
 
 # Create your views here.
+def index(request):
+    questions = Question.objects.all().order_by('-posted_date')
+    return render(request, 'questions/questions_list_view.html', {
+        'base_html': 'user/base.html',
+        'questions': questions,
+        'page_title': 'All Questions',
+        'title': 'Questions'
+    })
+
+
 @login_required(login_url='/user/login/')
 def comment_question(request, question_id):
     question = Question.objects.get(pk=question_id)
