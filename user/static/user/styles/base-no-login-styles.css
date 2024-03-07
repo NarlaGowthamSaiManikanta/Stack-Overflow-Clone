@@ -40,6 +40,15 @@ body {
     margin: 0 auto;
 }
 
+#header-container > div {
+    display: flex;
+    align-items: center;
+}
+
+#header-container >:nth-child(2) {
+    width: -webkit-fill-available;
+}
+
 .logo {
     display: block;
     width: 10rem;
@@ -52,6 +61,7 @@ body {
 .products-btn-active {
     padding: 0.25rem 0.75rem;
     border: none;
+    width: max-content;
     border-radius: 1rem;
     color: var(--light-grey-for-text);
     background-color: white;
@@ -62,6 +72,7 @@ body {
 #login,
 #signup {
     padding: 0.75rem;
+    width: max-content;
     border-radius: 0.25rem;
     border-style: solid;
     border-width: 1px;
@@ -104,7 +115,7 @@ a:hover {
 #content-search-form {
     margin: 0 0.25rem;
     height: 2rem;
-    width: calc(100% - 38rem);
+    width: -webkit-fill-available;
     border-style: solid;
     border-width: 1px;
     border-radius: 7.5px;
@@ -281,6 +292,7 @@ a:hover {
     font-family: var(--rewards-text-font-family);
     align-items: center;
     padding: 0.5rem;
+    text-decoration: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     color: var(--dark-grey);
@@ -296,6 +308,7 @@ a:hover {
 
 .body-container {
     max-width: 1200px;
+    min-height: calc(100vh - 20rem);
     margin: 0 auto;
     margin-top: 3.25rem;
     display: flex;
@@ -398,6 +411,10 @@ footer {
 }
 
 @media (max-width: 767px) {
+    .content-container {
+        width: 100%;
+    }
+    
     #header-container {
         justify-content: space-between;
     }
@@ -425,7 +442,8 @@ footer {
 
     #left-sidebar {
         display: none;
-        position: absolute;
+        position: fixed;
+        left: 0;
         background-color: white;
         border-bottom-right-radius: 5px;
         box-shadow: 0.25rem 0.25rem 1rem var(--dark-grey);
@@ -460,6 +478,10 @@ footer {
         width: 1.5rem;
         border-style: none;
         padding: 0 0.5rem;
+    }
+
+    #header-container>:nth-child(2) {
+        justify-content: flex-end;
     }
 
     #search-icon {

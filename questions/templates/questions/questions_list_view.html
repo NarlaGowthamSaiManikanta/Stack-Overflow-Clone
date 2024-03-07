@@ -28,7 +28,13 @@
     <div class="question-info">
         <div class="question-details">
             <p class="question-votes">{{question.get_votes}} votes</p>
+            {% if question.answer_set.count > 0 and question.accepted_answer %}
+            <p class="question-answers-count-accepted">✓ {{question.answer_set.count}} answers</p>
+            {% elif question.answer_set.count > 0 %}
             <p class="question-answers-count">{{question.answer_set.count}} answers</p>
+            {% else %}
+            <p class="question-answers-zero">0 answers</p>
+            {% endif %}
             <p class="question-views">{{ question.visit_set.count }} views</p>
             {% if question.bounty_amount > 0 %}
             <p class = "question-bounty">+{{question.bounty_amount}}</p>
@@ -56,7 +62,7 @@
     </div>
     {% endfor %}
     {% if page_title == 'Top Questions' %}
-    <h4>Looking for more? Browse the <a>complete list of questions</a>, or <a>popular tags</a>. Help us answer unanswered questions.</h4>
+    <h4>Looking for more? Browse the <a href="{% url 'questions:index' %}">complete list of questions</a>, or <a href="{% url 'questions:index' %}">popular tags</a>. Help us answer unanswered questions.</h4>
     {% endif %}
 </div>
 {% endblock content-container %}

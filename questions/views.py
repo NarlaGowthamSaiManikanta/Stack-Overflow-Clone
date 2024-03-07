@@ -7,9 +7,12 @@ from .models import Question, Answer, Visit, Tag
 
 # Create your views here.
 def index(request):
+    base_html = 'user/base.html'
+    if request.user.is_anonymous:
+        base_html = 'user/base-no-login.html'
     questions = Question.objects.all().order_by('-posted_date')
     return render(request, 'questions/questions_list_view.html', {
-        'base_html': 'user/base.html',
+        'base_html': base_html,
         'questions': questions,
         'page_title': 'All Questions',
         'title': 'Questions'

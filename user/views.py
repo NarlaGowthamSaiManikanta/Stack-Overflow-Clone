@@ -25,6 +25,7 @@ def home(request):
             'base_html': 'user/base.html',
             'questions': questions,
             'page_title': 'Top Questions',
+            'title': 'Home'
         })
 
 
@@ -55,7 +56,7 @@ def profile(request, user_id):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('user:index')
+        return redirect('index')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -63,7 +64,7 @@ def login_view(request):
             login(request, user)
             if request.GET.get('next') is not None:
                 return redirect(request.GET.get('next'))
-            return redirect('user:index')
+            return redirect('index')
         else:
             try:
                 user = User.objects.get(email=request.POST.get('username'))

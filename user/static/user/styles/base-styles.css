@@ -39,6 +39,10 @@ body {
     margin: 0 auto;
 }
 
+#header-container>:nth-child(2) {
+    width:-webkit-fill-available;
+}
+
 .logo {
     display: block;
     width: 10rem;
@@ -101,6 +105,7 @@ body {
 }
 
 #header-navigation-bar {
+    position: relative;
     margin: 0 0.5rem;
     height: 2.625rem;
     display: flex;
@@ -261,6 +266,7 @@ body {
     font-family: var(--rewards-text-font-family);
     align-items: center;
     padding: 0.5rem;
+    text-decoration: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     color: var(--dark-grey);
@@ -276,6 +282,7 @@ body {
 
 .body-container {
     max-width: 1200px;
+    min-height: calc(100vh - 20rem);
     margin: 0 auto;
     margin-top: 3.25rem;
     display: flex;
@@ -356,15 +363,59 @@ footer {
 #logout-container {
     display: none;
     position: absolute;
-    padding: 1.5rem;
     background-color: white;
     border-radius: 0.25rem;
     border-color: var(--light-grey);
     border-style: solid;
     border-width: 1px;
-    right: 0;
-    top: 3rem;
-    box-shadow: 0rem 0rem 1rem #71706e;
+    right: -0.5rem;
+    top: 2.8rem;
+    box-shadow: 0rem 0.25rem 0.5rem #71706e;
+    font-family: sans-serif;
+
+    h5 {
+        margin: 0;
+        padding: 0.5rem;
+        border-bottom-color: rgb(157 212 223 / 72%);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        color: rgb(100 156 194);
+        background-color: rgb(163 179 204 / 39%);
+    }
+
+    #community-container {
+        padding: 0.5rem;
+        width: 15rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    a {
+        font-size: 0.8rem;
+        color: rgb(38 102 146);
+    }
+}
+
+.community {
+    display: flex;
+    align-items:center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #246095;
+}
+
+.community-logo {
+    display: block;
+    height: 1.5rem;
+    width: 1rem;
+    background-image: url(https://cdn.sstatic.net/Img/unified/sprites.svg?v=fcc0ea44ba27);
+    background-size: 550%;
+    margin-right: 0.5rem;
+}
+
+#header-container > div {
+    display:flex;
+    align-items:center;
 }
 
 @media (max-width: 1023px) {
@@ -392,6 +443,19 @@ footer {
 }
 
 @media (max-width: 767px) {
+    .content-container {
+        width: 100%;
+    }
+    
+    #header-container {
+        justify-content: space-between
+    }
+
+    #header-container>:nth-child(2) {
+        max-width: calc(100% - 10rem);
+        justify-content: flex-end;
+    }
+
     #sidebar-menu {
         display: block;
     }
@@ -404,7 +468,7 @@ footer {
 
     #left-sidebar {
         display: none;
-        position: absolute;
+        position: fixed;
         background-color: white;
         border-bottom-right-radius: 5px;
         box-shadow: 0.25rem 0.25rem 1rem var(--dark-grey);
