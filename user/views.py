@@ -63,8 +63,8 @@ def profile(request, user_id):
 
 
 def saves(request, user_id):
-    if user_id != request.user:
-        return redirect('user:profile')
+    if User.objects.get(pk=user_id) != request.user:
+        return redirect('user:profile', user_id)
 
     base_html = 'user/base.html'
     if request.user.is_anonymous:
