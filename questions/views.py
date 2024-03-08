@@ -227,3 +227,12 @@ def tag_upload(request):
         else:
             return render(request, 'questions/ask.html', {'ask_form': tag_form})
     return render(request, 'questions/ask.html', {'ask_form': TagForm()})
+
+
+def tags_view(request):
+    base_html = 'user/base.html'
+    if request.user.is_anonymous:
+        base_html = 'user/base-no-login.html'
+
+    tags = Tag.objects.all()
+    return render(request, 'questions/tags-list-view.html', {'tags': tags, 'base_html': base_html})

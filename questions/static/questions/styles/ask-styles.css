@@ -1,6 +1,6 @@
 #left-sidebar {
     display: none;
-    position: absolute;
+    position: fixed;
     background-color: white;
     border-style: solid;
     border-width: 1px;
@@ -20,15 +20,14 @@
     padding: 0;
     width: 1.5rem;
     height: 1.5rem;
+}
 
-    #first-path {
-        d: path("M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z") !important;
-    }
+.nav-icon-active #first-path {
+    d: path("M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z") !important;
+}
 
-    #second-path {
-        d: path("M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z");
-    }
-
+.nav-icon-active #second-path {
+    d: path("M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z");
 }
 
 header {
@@ -71,12 +70,13 @@ body {
     flex-direction: column;
     background-color: white;
     border-color: #666666;
+}
 
-    p {
-        font-size: 0.9rem;
-        color:#666666;
-        margin: 0.25rem 0;
-    }
+.question-guide p,
+.input-fields p {
+    font-size: 0.9rem;
+    color:#666666;
+    margin: 0.25rem 0;
 }
 
 .input-fields input,
@@ -100,10 +100,6 @@ select:focus {
     outline-style: solid;
     outline-width: 2px;
     outline-offset: 2px;
-
-    .input-fields-guide {
-        display: block;
-    }
 }
 
 label {
@@ -117,23 +113,23 @@ label {
     color: rgb(54, 63, 70);
     border-color: rgb(32, 143, 222);
     background-color: rgba(110, 166, 204, 0.281);
+}
 
-    h3 {
-        font-weight: 500;
-    }
+.question-guide h3 {
+    font-weight: 500;
+}
 
-    ul {
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 0;
-        list-style-position: inside;
-    }
+.question-guide ul {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0;
+    list-style-position: inside;
+}
 
-    li {
-        font-weight: 300;
-        font-size: 0.9rem;
-        margin-left: 1rem;
-    }
+.question-guide li {
+    font-weight: 300;
+    font-size: 0.9rem;
+    margin-left: 1rem;
 }
 
 h2 {
@@ -172,25 +168,25 @@ h2 {
     border-radius: 0.4rem;
     border-width: 1px;
     border-color:#666666;
-
-    h4,
-    p {
-        margin: 0;
-        padding: 1rem;
-        font-size: 0.8rem;
-    }
-
-    h4 {
-        font-weight: 400;
-        font-size: 1rem;
-        background-color:#f6f6f6;
-        border-bottom-style: solid;
-        border-top-left-radius: 0.4rem;
-        border-top-right-radius: 0.4rem;
-        border-width: 1px;
-        border-color: #666666;
-    }
 }
+
+.input-fields-guide h4,
+.input-fields-guide p {
+    margin: 0;
+    padding: 1rem;
+    font-size: 0.8rem;
+}
+
+.input-fields-guide h4 {
+    font-weight: 400;
+    font-size: 1rem;
+    background-color:#f6f6f6;
+    border-bottom-style: solid;
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    border-width: 1px;
+    border-color: #666666;
+ }
 
 #ask-form ul,
 #review-form ul {

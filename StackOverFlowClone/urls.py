@@ -19,13 +19,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from user.views import home
+from questions.views import tags_view
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
     path('', home, name='index'),
-    path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
+    path('tags/', tags_view, name='tags' ),
     path('questions/', include('questions.urls')),
     path('mdeditor/', include('mdeditor.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

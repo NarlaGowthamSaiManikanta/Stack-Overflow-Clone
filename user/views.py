@@ -97,7 +97,7 @@ def signup(request):
                 'email': request.user.email,
                 'picture': request.user.profile_pic.url
             })
-        return redirect('user:index')
+        return redirect('index')
     if request.method == 'POST':
         email = request.POST.get('email')
         MyUser = get_user_model()

@@ -4,7 +4,7 @@ footer {
 
 #left-sidebar {
     display: none;
-    position: absolute;
+    position: fixed;
     background-color: white;
     border-style: solid;
     border-width: 1px;
@@ -24,15 +24,14 @@ footer {
     padding: 0;
     width: 1.5rem;
     height: 1.5rem;
+}
 
-    #first-path {
-        d: path("M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z") !important;
-    }
+.nav-icon-active #first-path {
+    d: path("M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z") !important;
+}
 
-    #second-path {
-        d: path("M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z");
-    }
-
+.nav-icon-active #second-path {
+    d: path("M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z");
 }
 
 header {

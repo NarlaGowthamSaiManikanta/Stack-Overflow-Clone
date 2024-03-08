@@ -1,0 +1,33 @@
+{% extends base_html %}
+
+{% load static %}
+{% load humanize %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'questions/styles/tags-list-view-styles.css' %}">
+{% endblock stylesheet %}
+
+{% block title %}
+Tags - Stackoverflow
+{% endblock title %}
+
+{% block content-container %}
+<div class="title-container">
+    <div>
+        <h1>Tags</h1>
+        {% if user.is_authenticated and user.reputation < 50 %}
+        <a href="{% url 'questions:add_tag' %}">Add tag</a>
+        {% endif %}
+    </div>
+    <p>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
+</div>
+<div class="tags-container">
+    {% for tag in tags %}
+    <div class="tag">
+        <a href="{% url 'questions:tagged_questions' tag.name %}" class="tag-name">{{tag.name}}</a>
+        <p>{{tag.description}}</p>
+        <label>{{tag.question_set.count}} questions</label>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content-container %}

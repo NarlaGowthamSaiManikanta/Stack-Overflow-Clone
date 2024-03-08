@@ -22,7 +22,7 @@
                     <path fill-rule="evenodd" id="second-path"/>
                 </svg>
             </span>
-            <a href="#">
+            <a href="{% url 'index' %}">
                 <span class="logo"></span>
             </a>
             <a>
@@ -108,18 +108,12 @@
                 </svg>
                 <h4>Questions</h4>
             </a>
-            <a href="{% url 'questions:index' %}" id="tags-redirect" class="sidebar-options">
+            <a href="{% url 'tags' %}" id="tags-redirect" class="sidebar-options">
                 <svg aria-hidden="true" viewBox="0 0 18 18" class="sidebar-icon" id="tags-icon">
                     <path  d="M9.24 1a3 3 0 0 0-2.12.88l-5.7 5.7a2 2 0 0 0-.38 2.31 3 3 0 0 1 .67-1.01l6-6A3 3 0 0 1 9.83 2H14a3 3 0 0 1 .79.1A2 2 0 0 0 13 1H9.24Z" opacity=".4"/>
                     <path  d="M9.83 3a2 2 0 0 0-1.42.59l-6 6a2 2 0 0 0 0 2.82L6.6 16.6a2 2 0 0 0 2.82 0l6-6A2 2 0 0 0 16 9.17V5a2 2 0 0 0-2-2H9.83ZM12 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
                 </svg>
                 <h4>Tags</h4>
-            </a>
-            <a href="{% url 'questions:index' %}" id="saves-redirect" class="sidebar-options">
-                <svg aria-hidden="true" viewBox="0 0 18 18" class="sidebar-icon" id="saves-icon">
-                    <path  d="M3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z"/>
-                </svg>
-                <h4>Saves</h4>
             </a>
             <a href="{% url 'user:index' %}" id="saves-redirect" class="sidebar-options">
                 <svg aria-hidden="true" viewBox="0 0 18 18" class="sidebar-icon" id="users-icon">
