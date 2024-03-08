@@ -1,0 +1,153 @@
+.content-container {
+    padding: 2rem;
+    font-family: sans-serif;
+}
+
+.user-header {
+    display: flex;
+}
+
+.user-header img {
+    border-radius: 0.5rem;
+}
+
+.user-info {
+    margin-left: 2rem;
+    font-family: sans-serif;
+}
+
+.user-info h1 {
+    margin-top: 0;
+    font-weight: 400;
+    font-size: 1.75rem;
+}
+
+.user-info p {
+    font-size: 0.85rem;
+    color: #575757;
+}
+
+.btn-redirects {
+    margin: 2rem 0;
+}
+
+.btn-redirects a {
+    padding: 0.5rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #333333;
+    border-width: 1px;
+    margin-right: 1.5rem;
+}
+
+.btn-redirects .active-btn {
+    color: white;
+    background-color: #f17e3a;
+}
+
+.user-answers h3,
+.user-questions h3,
+.saved-questions h3, 
+.saved-answers h3,
+.user-stats h3 {
+    font-weight: 500;
+    margin: 0;
+}
+
+.user-answers-container > p,
+.user-questions-container > p {
+    margin: 0;
+    padding: 1rem;
+    color: #3e3e3e;
+}
+
+.user-questions-container,
+.user-answers-container,
+.user-stats-container {
+    border: solid 1px #cecece;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.user-question,
+.user-answer {
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    border-bottom: solid 1px #cecece;
+}
+
+.user-question label,
+.user-answer label {
+    padding: 0.25rem;
+    min-width: 1rem;
+    text-align: center;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: #467c46;
+}
+
+.user-question a,
+.user-answer a {
+    font-size: 1.15rem;
+    color: #174499;
+    text-decoration: none;
+}
+
+.user-question p,
+.user-answer p {
+    color: #575757;
+    font-size: 0.75rem;
+    width: max-content;
+    margin-left: auto;
+}
+
+.user-stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 1rem;
+    grid-gap: 0.75rem;
+    height: fit-content;
+}
+
+.user-stats h2 {
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+}
+
+.user-stats label {
+    color: #3c3c3c;
+}
+
+.user-content {
+    display: flex;
+}
+
+.user-posts {
+    margin-left: 2rem;
+    width: 70%
+}
+
+#user-questions {
+    grid-column: 1;
+}
+
+@media (max-width: 1023px) {
+    .user-content {
+        display: block;
+    }
+
+    .user-stats-container {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+
+    .user-posts {
+        width: 100%;
+        margin: 0;
+    }
+}

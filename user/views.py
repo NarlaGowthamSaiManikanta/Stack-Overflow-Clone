@@ -50,8 +50,32 @@ def logout_view(request):
 
 
 def profile(request, user_id):
+    base_html = 'user/base.html'
+    if request.user.is_anonymous:
+        base_html = 'user/base-no-login.html'
+
     user_data = User.objects.get(pk=user_id)
-    return HttpResponse(user_data.profile_pic)
+    return render(request, 'user/user-profile-view.html', {
+        'user_profile': user_data,
+        'page': 'profile',
+        'base_html': base_html,
+    })
+
+
+def saves(request, user_id):
+    if user_id != request.user:
+        return redirect('user:profile')
+
+    base_html = 'user/base.html'
+    if request.user.is_anonymous:
+        base_html = 'user/base-no-login.html'
+
+    user_data = User.objects.get(pk=user_id)
+    return render(request, 'user/user-profile-view.html', {
+        'user_profile': user_data,
+        'page': 'saves',
+        'base_html': base_html
+    })
 
 
 def login_view(request):

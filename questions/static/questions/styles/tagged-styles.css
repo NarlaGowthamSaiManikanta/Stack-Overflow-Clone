@@ -168,11 +168,11 @@
 .questions-container > h4 {
     font-weight: 500;
     font-size: 1.15rem;
+}
 
-    a {
-        color: rgb(55, 117, 217);
-        text-decoration: none;
-    }
+.questions-container a {
+    color: rgb(55, 117, 217);
+    text-decoration: none;
 }
 
 @media (max-width:1023px) {
@@ -195,12 +195,15 @@
 
     .question-details {
         flex-direction: row;
+        align-items: center;
         width: 100%;
         padding: 0;
+    }
 
-        p {
-            margin-right: 0.5rem;
-        }
+    .question-info .question-answers-count-accepted,
+    .question-info .question-answers-count,
+    .question-details p {
+        margin-right: 0.5rem;
     }
 
     .question-author-details {

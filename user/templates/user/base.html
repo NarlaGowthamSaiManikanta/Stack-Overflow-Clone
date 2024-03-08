@@ -164,7 +164,7 @@
                 </svg>
                 <h4>Tags</h4>
             </a>
-            <a href="{% url 'index' %}" id="saves-redirect" class="sidebar-options">
+            <a href="{% url 'user:saves' user.id %}" id="saves-redirect" class="sidebar-options">
                 <svg aria-hidden="true" viewBox="0 0 18 18" class="sidebar-icon" id="saves-icon">
                     <path d="M3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z" />
                 </svg>
