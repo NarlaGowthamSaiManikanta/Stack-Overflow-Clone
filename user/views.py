@@ -27,6 +27,8 @@ def home(request):
             'page_title': 'Top Questions',
             'title': 'Home'
         })
+    else:
+        return redirect('questions:index')
 
 
 def index(request):
